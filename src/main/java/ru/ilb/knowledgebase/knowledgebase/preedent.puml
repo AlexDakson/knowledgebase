@@ -1,0 +1,23 @@
+@startuml
+
+
+class Document <<Документ>> {
+    id
+    source
+}
+class Source <<Ресурс>> {
+}
+class Podpiska <<Подписка>> {
+user
+source
+}
+class Catalog <<Каталог>> {
+}
+class User <<пользователь>> {
+}
+Document o-- Source
+Catalog o-- Document
+Podpiska o-- User
+Podpiska o-- Source
+
+@enduml
