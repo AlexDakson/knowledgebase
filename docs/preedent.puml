@@ -2,22 +2,75 @@
 
 
 class Document <<Документ>> {
-    id
-    source
+    - id
+    - source
+ - resources
+ + __construct(name, source)
+ - createResources()
 }
+
 class Source <<Ресурс>> {
+    - tag
+    + __construct(tag) 
 }
-class Podpiska <<Подписка>> {
-user
-source
+
+class Subscribtion <<Подписка>> {
+    - user
+    - document
+     + __construct(user, resource)
 }
 class Catalog <<Каталог>> {
+    - documents
+    + __construct()
 }
-class User <<пользователь>> {
+
+class User <<Пользователь>> {
+    - login
+    + __construct(login)
 }
+
+class Adapter {
+    - source
+    - docs
+    + __construct(sourse) 
+    + getDocs()
+}
+
+class ResourceAdapter {
+    - resource
+    - source
+    + __construct(source)
+    - getSource(source)
+    + getResources(tag = "h[0-6]+", attribute = "id")
+}
+
+class Subscribtions <<Подписки>>{
+    - subscribtions
+    + subscribe(user, resource)
+}
+
+class WatcherSubscribtions {
+    - notification
+    + setNotification(notification)
+    + notification(elemntDiv)
+    - getId(tag)
+    - etText(tag)  
+} 
+
+class Notification {
+    - subscribtions
+    + setSubscribtions(subscribtions)
+    + notify(idDoc, textNotificate)
+    + sendNotification(user, textNotification)
+}
+
 Document o-- Source
 Catalog o-- Document
-Podpiska o-- User
-Podpiska o-- Source
-
+Subscribtion o-- User
+Adapter --o Catalog 
+ResourceAdapter --o Document
+Subscribtions o-- Subscribtion
+Document o-- Subscribtion
+WatcherSubscribtions o-- Notification
+Notification o-- Subscribtions
 @enduml
